@@ -10,6 +10,16 @@ Currently 2 scenes are setup. The first scene is the same as the default BitWig 
 
 The second scene is almost identical except the right hand buttons (B9 / B18) change the current parameter page for the selected device.
 
+M-Audio - Oxygen 25
+-------------------
+
+Following controls are implemented: 
+
+- transport-buttons
+- track selection
+- slider sets channel-volume
+- knobs are freely mappable
+
 Installation
 ------------
 
