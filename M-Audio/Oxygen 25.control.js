@@ -27,6 +27,18 @@ var CC =
 	SLIDER     : 7,
 };
 
+var KNOBS =
+[
+  74,	// C1
+  71,	// C2
+  91,	// C3
+  93,	// C4
+  73,	// C5
+  72,	// C6
+  5, 	// C7
+  84,	// C8
+];
+
 var LOWEST_CC = 2;
 var HIGHEST_CC = CC.PREV_TRACK - 1;
 
@@ -49,6 +61,8 @@ function init()
 
 	// The cursor track view follows the track selection in the application GUI
 	cursorTrack = host.createCursorTrack(4, 4);
+
+	primaryInstrument = cursorTrack.getPrimaryInstrument();
 }
 
 function onMidi(status, data1, data2)
@@ -97,11 +111,19 @@ function onMidi(status, data1, data2)
 			}
 			else
 			{
-				// Handle CC 02 - 109
-				if (data1 >= LOWEST_CC && data1 <= HIGHEST_CC)
+				// Handle knobs
+				if (KNOBS.includes(data1))
 				{
-					var index = data1 - LOWEST_CC;
-					userControls.getControl(index).set(data2, 128);
+					primaryInstrument.getMacro(KNOBS.indexOf(data1)).getAmount().set(data2, 128);
+				}
+				else
+				{
+					// Handle CC 02 - 109
+					if (data1 >= LOWEST_CC && data1 <= HIGHEST_CC)
+					{
+						var index = data1 - LOWEST_CC;
+						userControls.getControl(index).set(data2, 128);
+					}
 				}
 			}
 		}
